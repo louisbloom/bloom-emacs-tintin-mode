@@ -174,20 +174,69 @@
   (should (eq (tintin-test-face-at "#math x {3.14}" 10)
               'tintin-number-face)))
 
-(ert-deftest tintin-test-face-speedwalk ()
-  "Speedwalk like 3n2e should get tintin-number-face."
-  (should (eq (tintin-test-face-at "3n2e" 1)
-              'tintin-number-face)))
-
-(ert-deftest tintin-test-face-speedwalk-diagonal ()
-  "Speedwalk with diagonal like 2sw should get tintin-number-face."
-  (should (eq (tintin-test-face-at "2sw3ne" 1)
-              'tintin-number-face)))
+;; Positive: speedwalks/directions inside braces as standalone commands
 
 (ert-deftest tintin-test-face-speedwalk-in-braces ()
   "Speedwalk inside braces should get tintin-number-face."
   (should (eq (tintin-test-face-at "{3n2e}" 2)
               'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-diagonal ()
+  "Diagonal speedwalk inside braces should get tintin-number-face."
+  (should (eq (tintin-test-face-at "{2sw3ne}" 2)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-direction-in-braces ()
+  "Bare direction inside braces should get tintin-number-face."
+  (should (eq (tintin-test-face-at "{w;look}" 2)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-direction-with-count ()
+  "Direction with count inside braces should get tintin-number-face."
+  (should (eq (tintin-test-face-at "{3e;look}" 2)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-direction-after-semicolon ()
+  "Direction after semicolon should get tintin-number-face."
+  (should (eq (tintin-test-face-at "{look;e}" 7)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-after-semicolon ()
+  "Speedwalk after semicolon should get tintin-number-face."
+  (should (eq (tintin-test-face-at "{look;3n2e}" 7)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-direction-between-semicolons ()
+  "Direction between semicolons should get tintin-number-face."
+  (should (eq (tintin-test-face-at "{look;s;say hi}" 7)
+              'tintin-number-face)))
+
+;; Negative: should NOT highlight outside braces or mid-command
+
+(ert-deftest tintin-test-face-speedwalk-outside-braces ()
+  "Speedwalk outside braces should NOT get tintin-number-face."
+  (should-not (eq (tintin-test-face-at "3n2e" 1)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-direction-outside-braces ()
+  "Bare direction outside braces should NOT get tintin-number-face."
+  (should-not (eq (tintin-test-face-at "w" 1)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-non-direction-in-braces ()
+  "Non-direction word in braces should NOT get tintin-number-face."
+  (should-not (eq (tintin-test-face-at "{g all box}" 2)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-word-is-speedwalk ()
+  "Word composed entirely of direction letters is a speedwalk."
+  (should (eq (tintin-test-face-at "{news}" 2)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-direction-mid-command ()
+  "Direction letter mid-command should NOT get tintin-number-face."
+  (should-not (eq (tintin-test-face-at "{get east}" 6)
+                  'tintin-number-face)))
 
 ;; ============================================================================
 ;; Font-lock: special syntax

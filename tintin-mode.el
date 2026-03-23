@@ -177,6 +177,44 @@
   "TinTin++ other commands.")
 
 ;; ============================================================================
+;; Speedwalk matcher
+;; ============================================================================
+
+(defun tintin-match-speedwalk (limit)
+  "Match speedwalks and directions inside braces between semicolons.
+Only matches when the candidate is a standalone command, bounded by
+`{', `}', `;', or newline on both sides."
+  (let ((sw-re "\\`\\(?:[0-9]*\\(?:ne\\|nw\\|se\\|sw\\|[neswud]\\)\\)+\\'")
+        found mb me)
+    (while (and (not found) (< (point) limit))
+      (let ((ppss (syntax-ppss)))
+        (if (<= (nth 0 ppss) 0)
+            ;; Not inside braces — skip to next opening brace
+            (if (not (search-forward "{" limit t))
+                (goto-char limit))
+          ;; Inside braces — find next segment boundary
+          (let ((seg-start (point))
+                (seg-end (or (let ((p (re-search-forward "[;{}]" limit t)))
+                               (when p (1- p)))
+                             limit)))
+            (goto-char (1+ seg-end))
+            (let* ((seg (string-trim
+                         (buffer-substring-no-properties seg-start seg-end))))
+              (when (and (> (length seg) 0)
+                         (string-match-p sw-re seg))
+                ;; Find the trimmed match position
+                (save-excursion
+                  (goto-char seg-start)
+                  (skip-chars-forward " \t")
+                  (setq mb (point))
+                  (setq me (+ mb (length seg)))
+                  (setq found t))))))))
+    (when found
+      (set-match-data (list mb me))
+      (goto-char me)
+      t)))
+
+;; ============================================================================
 ;; Font-lock keywords
 ;; ============================================================================
 
@@ -207,8 +245,8 @@
       ("[$&*][a-zA-Z_][a-zA-Z0-9_-]*" 0 'tintin-variable-face)
       ;; Pattern matching: %0–%99 captures, %* wildcard
       ("%\\(?:[0-9]\\{1,2\\}\\|\\*\\)" 0 'tintin-variable-face)
-      ;; Speedwalks: e.g. 3n2e4sw
-      ("\\_<\\(?:[0-9]+\\(?:ne\\|nw\\|se\\|sw\\|[neswud]\\)\\)+\\_>" 0 'tintin-number-face)
+      ;; Speedwalks and directions inside braces: e.g. {3n2e;w;look}
+      (tintin-match-speedwalk 0 'tintin-number-face)
       ;; Numeric constants
       ("\\_<[0-9]+\\(?:\\.[0-9]+\\)?\\_>" 0 'tintin-number-face)
       ;; Escape sequences
