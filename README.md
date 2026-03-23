@@ -73,6 +73,8 @@ Installs to `$XDG_DATA_HOME/emacs/site-lisp/` (defaults to `~/.local/share/emacs
   :vc (:url "https://codeberg.org/thomasc/emacs-tintin-mode"))
 ```
 
+**Note:** `package-vc` generates a `tintin-mode-pkg.el` without a `lexical-binding` directive, producing a harmless byte-compiler warning. This is an Emacs `package-vc` issue, not a problem with this package.
+
 ### straight.el
 
 ```elisp
