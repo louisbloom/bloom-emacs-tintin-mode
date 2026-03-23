@@ -205,14 +205,18 @@
       ("@\\([a-zA-Z_][a-zA-Z0-9_-]*\\)" 1 'tintin-function-face)
       ;; Variables: $name, &name, *name (with optional [key] subscripts)
       ("[$&*][a-zA-Z_][a-zA-Z0-9_-]*" 0 'tintin-variable-face)
-      ;; Capture arguments: %0 through %99
-      ("%[0-9]\\{1,2\\}" 0 'tintin-variable-face)
+      ;; Pattern matching: %0–%99 captures, %* wildcard
+      ("%\\(?:[0-9]\\{1,2\\}\\|\\*\\)" 0 'tintin-variable-face)
+      ;; Speedwalks: e.g. 3n2e4sw
+      ("\\_<\\(?:[0-9]+\\(?:ne\\|nw\\|se\\|sw\\|[neswud]\\)\\)+\\_>" 0 'tintin-number-face)
       ;; Numeric constants
       ("\\_<[0-9]+\\(?:\\.[0-9]+\\)?\\_>" 0 'tintin-number-face)
       ;; Escape sequences
       ("\\\\." 0 'tintin-special-face prepend)
       ;; Semicolons as command separators
-      (";" 0 'tintin-special-face)))
+      (";" 0 'tintin-special-face)
+      ;; Braces
+      ("[{}]" 0 'tintin-special-face)))
   "Font-lock keywords for `tintin-mode'.")
 
 ;; ============================================================================

@@ -5,17 +5,32 @@ Emacs major mode for editing [TinTin++](https://tintin.mudhalla.net/) `.tin` scr
 ## Features
 
 - Syntax highlighting for commands, control flow, variables, functions, and comments
+- Pattern matching (`%0`–`%99`, `%*`) and speedwalk (`3n2e4sw`) highlighting
 - Three comment styles: `/* */` blocks, `//` lines, and `#nop`
-- Brace matching (`C-M-f` / `C-M-b`)
+- Brace matching (`C-M-f` / `C-M-b`) and brace highlighting
 - Indentation based on brace nesting (`TAB`)
 - Case-insensitive command recognition
-- Colors inspired by Charm
+- [Charm](https://charm.land)-inspired color palette with 8 faces (dark and light variants)
 
 ## Why this mode?
 
-MELPA already has a [tintin-mode](https://github.com/matthewrsilver/tintin-mode) with broad feature coverage including subcommand option highlighting, configurable prefix characters, ANSI color code highlighting, and capture pattern support.
+MELPA already has a [tintin-mode](https://github.com/matthewrsilver/tintin-mode) with broad feature coverage including subcommand option highlighting, configurable prefix characters, and ANSI color code highlighting.
 
-This mode takes a different approach, focusing on aesthetics: a custom [Charm](https://charm.land)-inspired color scheme with 8 purpose-built faces (dark and light variants), `//` line comment support, number and escape sequence highlighting, and catch-all `#command` coloring so even unknown commands get highlighted.
+This mode takes a different approach, focusing on aesthetics and readability:
+
+| Feature | MELPA | This mode |
+|---------|-------|-----------|
+| Color scheme | Inherits theme defaults | Custom [Charm](https://charm.land) palette, 8 faces with dark/light variants |
+| Command categories | Single keyword face | Separate faces for control flow, functions, actions, variables |
+| `//` line comments | No | Yes |
+| Catch-all `#command` | No | Yes — unknown commands still get highlighted |
+| Pattern captures (`%0`–`%99`, `%*`) | Yes | Yes |
+| Speedwalk highlighting | Yes | Yes |
+| Number and escape highlighting | No | Yes |
+| Brace and semicolon highlighting | No | Yes |
+| Subcommand option highlighting | Yes | No |
+| Configurable prefix character | Yes | No |
+| ANSI color code highlighting | Yes | No |
 
 Install this one if you prefer how it looks.
 
