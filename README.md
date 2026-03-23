@@ -18,19 +18,19 @@ MELPA already has a [tintin-mode](https://github.com/matthewrsilver/tintin-mode)
 
 This mode takes a different approach, focusing on aesthetics and readability:
 
-| Feature | MELPA | This mode |
-|---------|-------|-----------|
-| Color scheme | Inherits theme defaults | Custom [Charm](https://charm.land) palette, 8 faces with dark/light variants |
-| Command categories | Single keyword face | Separate faces for control flow, functions, actions, variables |
-| `//` line comments | No | Yes |
-| Catch-all `#command` | No | Yes — unknown commands still get highlighted |
-| Pattern captures (`%0`–`%99`, `%*`) | Yes | Yes |
-| Speedwalk highlighting | Yes | Yes |
-| Number and escape highlighting | No | Yes |
-| Brace and semicolon highlighting | No | Yes |
-| Subcommand option highlighting | Yes | No |
-| Configurable prefix character | Yes | No |
-| ANSI color code highlighting | Yes | No |
+| Feature                             | MELPA                   | This mode                                                                    |
+| ----------------------------------- | ----------------------- | ---------------------------------------------------------------------------- |
+| Color scheme                        | Inherits theme defaults | Custom [Charm](https://charm.land) palette, 8 faces with dark/light variants |
+| Command categories                  | Single keyword face     | Separate faces for control flow, functions, actions, variables               |
+| `//` line comments                  | No                      | Yes                                                                          |
+| Catch-all `#command`                | No                      | Yes — unknown commands still get highlighted                                 |
+| Pattern captures (`%0`–`%99`, `%*`) | Yes                     | Yes                                                                          |
+| Speedwalk highlighting              | Yes                     | Yes                                                                          |
+| Number and escape highlighting      | No                      | Yes                                                                          |
+| Brace and semicolon highlighting    | No                      | Yes                                                                          |
+| Subcommand option highlighting      | Yes                     | No                                                                           |
+| Configurable prefix character       | Yes                     | No                                                                           |
+| ANSI color code highlighting        | Yes                     | No                                                                           |
 
 Install this one if you prefer how it looks.
 

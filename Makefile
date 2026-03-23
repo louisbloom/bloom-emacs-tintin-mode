@@ -26,6 +26,7 @@ format:
 	  --eval '(require (quote package))' \
 	  --eval '(package-initialize)' \
 	  --eval '(dolist (f (list "tintin-mode.el" "tintin-mode-tests.el")) (find-file f) (indent-region (point-min) (point-max)) (save-buffer))'
+	@command -v prettier >/dev/null 2>&1 && prettier --write *.md || true
 
 clean:
 	rm -f tintin-mode.elc
