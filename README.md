@@ -66,6 +66,21 @@ Installs to `$XDG_DATA_HOME/emacs/site-lisp/` (defaults to `~/.local/share/emacs
 (require 'tintin-mode)
 ```
 
+### use-package :vc (Emacs 30+)
+
+```elisp
+(use-package tintin-mode
+  :vc (:url "https://codeberg.org/thomasc/emacs-tintin-mode"))
+```
+
+### straight.el
+
+```elisp
+(straight-use-package
+ '(tintin-mode :type git :host nil
+               :repo "https://codeberg.org/thomasc/emacs-tintin-mode"))
+```
+
 ## Usage
 
 Opening any `.tin` file activates the mode automatically. To activate manually:
