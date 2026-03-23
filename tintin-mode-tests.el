@@ -150,14 +150,88 @@
   (should (eq (tintin-test-face-at "tell %1 hello" 6)
               'tintin-variable-face)))
 
+(ert-deftest tintin-test-face-capture-two-digit ()
+  "%99 should get tintin-variable-face."
+  (should (eq (tintin-test-face-at "tell %99 hello" 6)
+              'tintin-variable-face)))
+
+(ert-deftest tintin-test-face-capture-wildcard ()
+  "%* should get tintin-variable-face."
+  (should (eq (tintin-test-face-at "#action {%*} {say hi}" 10)
+              'tintin-variable-face)))
+
 ;; ============================================================================
-;; Font-lock: numbers
+;; Font-lock: numbers and speedwalks
 ;; ============================================================================
 
 (ert-deftest tintin-test-face-number ()
   "Numeric literal should get tintin-number-face."
   (should (eq (tintin-test-face-at "#loop {1} {5} {i} {get}" 8)
               'tintin-number-face)))
+
+(ert-deftest tintin-test-face-float ()
+  "Float literal should get tintin-number-face."
+  (should (eq (tintin-test-face-at "#math x {3.14}" 10)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk ()
+  "Speedwalk like 3n2e should get tintin-number-face."
+  (should (eq (tintin-test-face-at "3n2e" 1)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-diagonal ()
+  "Speedwalk with diagonal like 2sw should get tintin-number-face."
+  (should (eq (tintin-test-face-at "2sw3ne" 1)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-in-braces ()
+  "Speedwalk inside braces should get tintin-number-face."
+  (should (eq (tintin-test-face-at "{3n2e}" 2)
+              'tintin-number-face)))
+
+;; ============================================================================
+;; Font-lock: special syntax
+;; ============================================================================
+
+(ert-deftest tintin-test-face-escape-sequence ()
+  "Escape sequence \\n should get tintin-special-face."
+  (let ((face (tintin-test-face-at "say \\n" 5)))
+    (should (or (eq face 'tintin-special-face)
+                (and (listp face) (memq 'tintin-special-face face))))))
+
+(ert-deftest tintin-test-face-semicolon ()
+  "Semicolon should get tintin-special-face."
+  (should (eq (tintin-test-face-at "north;south" 6)
+              'tintin-special-face)))
+
+(ert-deftest tintin-test-face-open-brace ()
+  "Open brace should get tintin-special-face."
+  (should (eq (tintin-test-face-at "#if {true}" 5)
+              'tintin-special-face)))
+
+(ert-deftest tintin-test-face-close-brace ()
+  "Close brace should get tintin-special-face."
+  (should (eq (tintin-test-face-at "#if {true}" 10)
+              'tintin-special-face)))
+
+;; ============================================================================
+;; Font-lock: commands (additional categories)
+;; ============================================================================
+
+(ert-deftest tintin-test-face-variable-command ()
+  "#variable should get tintin-command-face."
+  (should (eq (tintin-test-face-at "#variable {hp} {100}" 1)
+              'tintin-command-face)))
+
+(ert-deftest tintin-test-face-other-command ()
+  "#send should get tintin-command-face."
+  (should (eq (tintin-test-face-at "#send {hello}" 1)
+              'tintin-command-face)))
+
+(ert-deftest tintin-test-face-event ()
+  "#event should get tintin-function-face."
+  (should (eq (tintin-test-face-at "#event {SESSION CONNECTED}" 1)
+              'tintin-function-face)))
 
 ;; ============================================================================
 ;; Font-lock: comments
