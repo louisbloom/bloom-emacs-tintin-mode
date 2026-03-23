@@ -9,30 +9,17 @@ Emacs major mode for editing [TinTin++](https://tintin.mudhalla.net/) `.tin` scr
 - Brace matching (`C-M-f` / `C-M-b`)
 - Indentation based on brace nesting (`TAB`)
 - Case-insensitive command recognition
-- Colors inspired by [Charm](https://charm.land)
+- Colors inspired by Charm
+
+## Why this mode?
+
+MELPA already has a [tintin-mode](https://github.com/matthewrsilver/tintin-mode) with broad feature coverage including subcommand option highlighting, configurable prefix characters, ANSI color code highlighting, and capture pattern support.
+
+This mode takes a different approach, focusing on aesthetics: a custom [Charm](https://charm.land)-inspired color scheme with 8 purpose-built faces (dark and light variants), `//` line comment support, number and escape sequence highlighting, and catch-all `#command` coloring so even unknown commands get highlighted.
+
+Install this one if you prefer how it looks.
 
 ## Installation
-
-### MELPA (recommended)
-
-Add MELPA to your package archives if you haven't already:
-
-```elisp
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-```
-
-Then install:
-
-```
-M-x package-install RET tintin-mode RET
-```
-
-Or with `use-package`:
-
-```elisp
-(use-package tintin-mode :ensure t)
-```
 
 ### Manual
 
@@ -88,14 +75,6 @@ make          # byte-compile
 make test     # run test suite
 make format   # indent elisp files
 make clean    # remove build artifacts
-```
-
-## MELPA Recipe
-
-```elisp
-(tintin-mode
- :fetcher codeberg
- :repo "thomasc/emacs-tintin-mode")
 ```
 
 ## License
