@@ -1,4 +1,4 @@
-;;; tintin-mode.el -- Major mode for editing TinTin++ scripts  -*- lexical-binding: t; -*-
+;;; tintin-mode.el --- Major mode for editing TinTin++ scripts  -*- lexical-binding: t; -*-
 
 ;; Author: Thomas Christensen
 ;; URL: https://codeberg.org/thomasc/emacs-tintin-mode
