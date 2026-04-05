@@ -238,6 +238,80 @@
   (should-not (eq (tintin-test-face-at "{get east}" 6)
                   'tintin-number-face)))
 
+;; Context-aware: suppress speedwalk in first brace of name/pattern commands
+
+(ert-deftest tintin-test-face-speedwalk-suppressed-action ()
+  "Speedwalk-like word in #action's first brace should NOT highlight."
+  (should-not (eq (tintin-test-face-at "#action {news} {read}" 10)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-suppressed-alias ()
+  "Direction in #alias's first brace should NOT highlight."
+  (should-not (eq (tintin-test-face-at "#alias {sw} {go southwest}" 9)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-suppressed-highlight ()
+  "Speedwalk-like word in #highlight's first brace should NOT highlight."
+  (should-not (eq (tintin-test-face-at "#highlight {news} {bold}" 13)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-suppressed-function ()
+  "Direction-letter name in #function's first brace should NOT highlight."
+  (should-not (eq (tintin-test-face-at "#function {send} {code}" 12)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-preserved-second-brace ()
+  "Speedwalk in second brace of #action should still highlight."
+  (should (eq (tintin-test-face-at "#action {pat} {3n2e}" 16)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-preserved-alias-body ()
+  "Direction in #alias body should still highlight."
+  (should (eq (tintin-test-face-at "#alias {name} {sw;look}" 16)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-first-suppressed-second-preserved ()
+  "Same word: suppressed in first brace, highlighted in second."
+  (should-not (eq (tintin-test-face-at "#action {news} {news}" 10)
+                  'tintin-number-face))
+  (should (eq (tintin-test-face-at "#action {news} {news}" 17)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-bare-braces-preserved ()
+  "Speedwalk in bare braces (no command) should still highlight."
+  (should (eq (tintin-test-face-at "{3n2e}" 2)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-suppressed-case-insensitive ()
+  "Suppression should work with uppercase commands."
+  (should-not (eq (tintin-test-face-at "#ACTION {news} {code}" 10)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-suppressed-multiline ()
+  "Suppression should work across lines."
+  (should-not (eq (tintin-test-face-at "#action\n  {news}\n  {code}" 12)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-speedwalk-nested-preserved ()
+  "Speedwalk in nested command body should still highlight."
+  (should (eq (tintin-test-face-at "#alias {name} {#if {1} {sw}}" 26)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-number-suppressed-in-name-arg ()
+  "Number in first brace of #action should NOT get number face."
+  (should-not (eq (tintin-test-face-at "#action {100} {code}" 10)
+                  'tintin-number-face)))
+
+(ert-deftest tintin-test-face-number-preserved-in-code-arg ()
+  "Number in second brace of #action should still get number face."
+  (should (eq (tintin-test-face-at "#action {pat} {100}" 16)
+              'tintin-number-face)))
+
+(ert-deftest tintin-test-face-number-preserved-in-control-flow ()
+  "Number in #if condition should still get number face."
+  (should (eq (tintin-test-face-at "#if {1} {code}" 6)
+              'tintin-number-face)))
+
 ;; ============================================================================
 ;; Font-lock: special syntax
 ;; ============================================================================
